@@ -10,14 +10,18 @@ public class Confusing {
     public static void method1() {
         System.out.println("I am method 1.");
     }
+
     public static void method2() {
         method1();
         System.out.println("I am method 2.");
+        // 12
     }
+
     public static void method3() {
         method2();
         System.out.println("I am method 3.");
         method1();
+        // 1231
     }
 
     public static void main(String[] args) {
@@ -25,11 +29,23 @@ public class Confusing {
         method3();
         method2();
         method3();
+        // 11231121231
     }
 }
 
 /* Before running the code, type your answer below.
 
 TODO: Write output here
+I am method 1.
+I am method 1.
+I am method 2.
+I am method 3.
+I am method 1.
+I am method 1.
+I am method 2.
+I am method 1.
+I am method 2.
+I am method 3.
+I am method 1.
 
 Then, click the green play button to check your work. */

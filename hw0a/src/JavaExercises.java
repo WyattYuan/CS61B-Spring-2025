@@ -12,7 +12,11 @@ public class JavaExercises {
      * The first row contains 1 star, the second 2 stars, and so on.
      */
     public static void starTriangle() {
-        // TODO: Fill in this function
+        String str = "*";
+        for (int i = 0; i < 5; i++) {
+            System.out.println(str);
+            str += "*";
+        }
     }
 
     /**
@@ -20,7 +24,10 @@ public class JavaExercises {
      * Example: printIndexed("hello") -> h4e3l2l1o0
      */
     public static void printIndexed(String s) {
-        // TODO: Fill in this function
+        
+        for (int i = 0; i < s.length(); i++) {
+
+        }
     }
 
     /**
@@ -35,11 +42,11 @@ public class JavaExercises {
     /**
      * Determines the quadrant of a Cartesian coordinate (x, y).
      * Returns:
-     *   1 for the first quadrant (x > 0, y > 0),
-     *   2 for the second quadrant (x < 0, y > 0),
-     *   3 for the third quadrant (x < 0, y < 0),
-     *   4 for the fourth quadrant (x > 0, y < 0),
-     *   0 if the point lies on an axis.
+     * 1 for the first quadrant (x > 0, y > 0),
+     * 2 for the second quadrant (x < 0, y > 0),
+     * 3 for the third quadrant (x < 0, y < 0),
+     * 4 for the fourth quadrant (x > 0, y < 0),
+     * 0 if the point lies on an axis.
      */
     public static int quadrant(int x, int y) {
         // TODO: Fill in this function
