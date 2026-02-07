@@ -19,7 +19,25 @@ public class GameLogic {
      *              if no merge occurs, then return 0.
      */
     public static int moveTileUpAsFarAsPossible(int[][] board, int r, int c, int minR) {
-        // TODO: Fill this in in tasks 2, 3, 4
+        if (board[r][c] == 0) return 0;
+        if (r == 0) return 0;
+        for (int rIndex = r - 1; rIndex >= 0; rIndex--) {
+            if (rIndex < minR) {
+                return 0;
+            } else if (board[rIndex][c] == board[r][c]) {
+                board[rIndex][c] = board[rIndex][c] + board[r][c];
+                board[r][c] = 0;
+                return 1 + rIndex;
+            } else if (board[rIndex][c] != 0 && board[rIndex][c] != board[r][c]) {
+                board[rIndex + 1][c] = board[r][c];
+                if (rIndex + 1 != r) board[r][c] = 0;
+                return 0;
+            } else if (rIndex == minR) {
+                board[rIndex][c] = board[r][c];
+                board[r][c] = 0;
+                return 0;
+            }
+        }
         return 0;
     }
 
