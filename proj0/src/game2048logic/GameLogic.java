@@ -21,26 +21,30 @@ public class GameLogic {
      * if no merge occurs, then return 0.
      */
     public static int moveTileUpAsFarAsPossible(int[][] board, int r, int c, int minR) {
-//      我的答案
-//      如果方格是0，直接ok
-        if (board[r][c] == 0) return 0;
-//      如果是最顶上的方格，直接ok
-        if (r == 0) return 0;
-//        对于所有当前方格上面的所有位置
+        // 我的答案
+        // 如果方格是0，直接ok
+        if (board[r][c] == 0) {
+            return 0;
+        }
+        // 如果是最顶上的方格，直接ok
+        if (r == 0) {
+            return 0;
+        }
+        // 对于所有当前方格上面的所有位置
         for (int rIndex = r - 1; rIndex >= 0; rIndex--) {
             if (rIndex < minR) {
                 return 0;
-            }
-//          遇到相同数字的tile，需要合并
-            else if (board[rIndex][c] == board[r][c]) {
+            } else if (board[rIndex][c] == board[r][c]) {
+                // 遇到相同数字的tile，需要合并
                 board[rIndex][c] = board[rIndex][c] + board[r][c];
                 board[r][c] = 0;
                 return 1 + rIndex;
-            }
-//          遇到不同数字的tile
-            else if (board[rIndex][c] != 0 && board[rIndex][c] != board[r][c]) {
+            } else if (board[rIndex][c] != 0 && board[rIndex][c] != board[r][c]) {
+                // 遇到不同数字的tile
                 board[rIndex + 1][c] = board[r][c];
-                if (rIndex + 1 != r) board[r][c] = 0;
+                if (rIndex + 1 != r) {
+                    board[r][c] = 0;
+                }
                 return 0;
             } else if (rIndex == minR) {
                 board[rIndex][c] = board[r][c];
@@ -50,35 +54,35 @@ public class GameLogic {
         }
         return 0;
 
-//      From Gemini
-//        int tileValue = board[r][c];
-//        if (tileValue == 0) return 0;
-//
-//        int destinationR = r;
-//
-//        // 1. 向上扫描，寻找最远空位或可合并的目标
-//        for (int i = r - 1; i >= minR; i--) {
-//            if (board[i][c] == 0) {
-//                // 当前是空位，暂定为目的地，继续向上看
-//                destinationR = i;
-//            } else if (board[i][c] == tileValue) {
-//                // 发现值相同的方块，执行合并
-//                board[i][c] = tileValue * 2;
-//                board[r][c] = 0;
-//                return 1 + i;
-//            } else {
-//                // 撞到了不同的方块，停止搜索
-//                break;
-//            }
-//        }
-//
-//        // 2. 如果最终目的地不是起始位置，则进行移动
-//        if (destinationR != r) {
-//            board[destinationR][c] = tileValue;
-//            board[r][c] = 0;
-//        }
-//
-//        return 0;
+        // From Gemini
+        //   int tileValue = board[r][c];
+        //   if (tileValue == 0) return 0;
+        //
+        //   int destinationR = r;
+        //
+        //   // 1. 向上扫描，寻找最远空位或可合并的目标
+        //   for (int i = r - 1; i >= minR; i--) {
+        //       if (board[i][c] == 0) {
+        //           // 当前是空位，暂定为目的地，继续向上看
+        //           destinationR = i;
+        //       } else if (board[i][c] == tileValue) {
+        //           // 发现值相同的方块，执行合并
+        //           board[i][c] = tileValue * 2;
+        //           board[r][c] = 0;
+        //           return 1 + i;
+        //       } else {
+        //           // 撞到了不同的方块，停止搜索
+        //           break;
+        //       }
+        //   }
+        //
+        //   // 2. 如果最终目的地不是起始位置，则进行移动
+        //   if (destinationR != r) {
+        //       board[destinationR][c] = tileValue;
+        //       board[r][c] = 0;
+        //   }
+        //
+        //   return 0;
     }
 
     /**
