@@ -28,7 +28,7 @@ public class Puzzle {
         Random r = new Random();
         r.setSeed(1678_971_254);
         for (int i = 0; i < 1323; i++) {
-            if (r.nextInt() == -2034104197) {
+            if (r.nextInt() == -2034104197) {  // i = 330
                 erroringMethod(r);
             }
         }
