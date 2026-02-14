@@ -30,11 +30,11 @@ public class MachineStage implements AdventureStage {
                 On the first (zeroth?) floor of Soda, below the labs, you find a mysterious machine.
                 It has holes for two lists of ints of the same length, and a third hole that looks
                 like it would output a number. The label reads:
-
+                
                     'SumOfElementWiseMax-inator'
-
+                
                 ... Huh. You decide to experiment with the machine for a bit.
-                    """;
+                """;
 
         System.out.println(msg);
 
@@ -61,7 +61,8 @@ public class MachineStage implements AdventureStage {
 
             int machineResult = sumOfElementwiseMax(arrOne, arrTwo);
 
-            System.out.println("The machine whirrs briefly before outputting a slip of paper, reading " + machineResult);
+            System.out.println("The machine whirrs briefly before outputting a slip of paper, reading "
+                    + machineResult);
             System.out.println("Does that seem right to you?");
             System.out.println("Enter [y] if you want to move on, and anything else to try again.");
             String response = in.readLine().toLowerCase();
@@ -88,7 +89,7 @@ public class MachineStage implements AdventureStage {
      * Returns the sum of integers a and b.
      */
     public static int mysteryAdd(int a, int b) {
-        return Math.addExact(a,b);
+        return Math.addExact(a, b);
     }
 
     /**

@@ -77,7 +77,7 @@ public class SpeciesListStage implements AdventureStage {
                 user = Arrays.asList(input.toLowerCase().split(" *, *"));
             }
             double similarity;
-            if (reference.isEmpty()){
+            if (reference.isEmpty()) {
                 similarity = 1;
             } else {
                 similarity = arraySimilarity(reference, user);
@@ -94,7 +94,7 @@ public class SpeciesListStage implements AdventureStage {
     /**
      * Computes the similarity of two lists. If there is similarity, return 1.
      * If there is no similarity, it should return 0.
-     *
+     * <p>
      * Similarity is defined as when listTwo contains all the elements in listOne.
      */
     public static int arraySimilarity(List<String> listOne, List<String> listTwo) {
