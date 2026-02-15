@@ -107,7 +107,7 @@ public class LinkedListDeque61BTest {
     }
 
     @Test
-    public void getRecursiveTest(){
+    public void getRecursiveTest() {
         Deque61B<Integer> lld = new LinkedListDeque61B<>();
         assertThat(lld.getRecursive(0)).isEqualTo(null);
         assertThat(lld.getRecursive(-1)).isEqualTo(null);
@@ -121,5 +121,37 @@ public class LinkedListDeque61BTest {
         assertThat(lld.getRecursive(-1)).isEqualTo(null);
         assertThat(lld.getRecursive(5)).isEqualTo(null);
         assertThat(lld.getRecursive(100)).isEqualTo(null);
+    }
+
+    @Test
+    public void removeFirstTest() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+
+        assertThat(lld.removeFirst()).isEqualTo(null);
+
+        for (int i = 0; i < 5; i++) {
+            lld.addLast(i);
+        }
+        lld.removeFirst();
+        assertThat(lld.toList()).containsExactly(1, 2, 3, 4);
+
+        lld.removeFirst();
+        assertThat(lld.toList()).containsExactly(2, 3, 4);
+    }
+
+    @Test
+    public void removeLastTest() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+
+        assertThat(lld.removeLast()).isEqualTo(null);
+
+        for (int i = 0; i < 5; i++) {
+            lld.addLast(i);
+        }
+        lld.removeLast();
+        assertThat(lld.toList()).containsExactly(0, 1, 2, 3);
+
+        lld.removeLast();
+        assertThat(lld.toList()).containsExactly(0, 1, 2);
     }
 }
