@@ -59,10 +59,6 @@ public class LinkedListDeque61BTest {
     }
 
     // Below, you'll write your own tests for LinkedListDeque61B.
-    @Test
-    public void constructTest() {
-        Deque61B<Integer> lld = new LinkedListDeque61B<>();
-    }
 
     @Test
     public void isEmptyTest() {
