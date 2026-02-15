@@ -21,11 +21,13 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     }
 
     Node<T> sentinel;
+    int size;
 
     public LinkedListDeque61B() {
         this.sentinel = new Node<T>();
         this.sentinel.next = sentinel;
         this.sentinel.prev = sentinel;
+        this.size = 0;
     }
 
     @Override
@@ -33,6 +35,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         Node<T> newFirstNode = new Node<T>(x, this.sentinel, this.sentinel.next);
         this.sentinel.next.prev = newFirstNode;
         this.sentinel.next = newFirstNode;
+        this.size += 1;
     }
 
     @Override
@@ -40,13 +43,14 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
         Node<T> newLastNode = new Node<T>(x, this.sentinel.prev, this.sentinel);
         this.sentinel.prev.next = newLastNode;
         this.sentinel.prev = newLastNode;
+        this.size += 1;
     }
 
     @Override
     public List<T> toList() {
         List<T> returnList = new ArrayList<>();
         Node<T> p = sentinel.next;
-        while (p != sentinel){
+        while (p != sentinel) {
             returnList.addLast(p.item);
             p = p.next;
         }
@@ -55,12 +59,12 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.sentinel.next == this.sentinel && this.sentinel.prev == this.sentinel;
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override

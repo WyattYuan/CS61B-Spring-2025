@@ -5,7 +5,9 @@ import org.junit.jupiter.api.Test;
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
 
-/** Performs some basic linked list tests. */
+/**
+ * Performs some basic linked list tests.
+ */
 public class LinkedListDeque61BTest {
 
     @Test
@@ -58,7 +60,36 @@ public class LinkedListDeque61BTest {
 
     // Below, you'll write your own tests for LinkedListDeque61B.
     @Test
-    public void constructTest(){
+    public void constructTest() {
         Deque61B<Integer> lld = new LinkedListDeque61B<>();
+    }
+
+    @Test
+    public void isEmptyTest() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+
+        assertThat(lld.isEmpty()).isTrue();
+
+        lld.addFirst(1);
+        assertThat(lld.isEmpty()).isFalse();
+        lld.addLast(-1);
+        assertThat(lld.isEmpty()).isFalse();
+    }
+
+    @Test
+    public void sizeTest() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+
+        assertThat(lld.size()).isEqualTo(0);
+
+        lld.addFirst(11);
+
+        assertThat(lld.size()).isEqualTo(1);
+
+        lld.addLast(22);
+        lld.addLast(33);
+
+        assertThat(lld.size()).isEqualTo(3);
+
     }
 }
