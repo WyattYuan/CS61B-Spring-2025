@@ -92,4 +92,21 @@ public class LinkedListDeque61BTest {
         assertThat(lld.size()).isEqualTo(3);
 
     }
+
+    @Test
+    public void getTest() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+        assertThat(lld.get(0)).isEqualTo(null);
+        assertThat(lld.get(-1)).isEqualTo(null);
+        assertThat(lld.get(1)).isEqualTo(null);
+        for (int i = 0; i < 5; i++) {
+            lld.addLast(i);
+        }
+        for (int i = 0; i < 5; i++) {
+            assertThat(lld.get(i)).isEqualTo(i);
+        }
+        assertThat(lld.get(-1)).isEqualTo(null);
+        assertThat(lld.get(5)).isEqualTo(null);
+        assertThat(lld.get(100)).isEqualTo(null);
+    }
 }
