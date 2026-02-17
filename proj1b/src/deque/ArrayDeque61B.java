@@ -144,21 +144,27 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
 
     private class ArrayDequeIterator implements Iterator<T> {
-        int wizPos;
+        private int wizPos;
+        private int count;
 
         public ArrayDequeIterator() {
             wizPos = Math.floorMod(nextFirst + 1, capacity);
+            count = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return wizPos != Math.floorMod(nextLast - 1, capacity);
+            return count < size;
         }
 
         @Override
         public T next() {
+            if (!hasNext()) {
+                throw new java.util.NoSuchElementException();
+            }
             T returnItem = backArray[wizPos];
             wizPos = Math.floorMod(wizPos + 1, capacity);
+            count++;
             return returnItem;
         }
     }

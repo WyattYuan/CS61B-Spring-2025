@@ -316,6 +316,9 @@ public class ArrayDeque61BTest {
     @Test
     void iteratorTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
+        for (Integer x : ad) {
+            System.out.println("Not supposed to see this line");
+        }
         ad.addLast(1);
         ad.addLast(2);
         ad.addLast(3);

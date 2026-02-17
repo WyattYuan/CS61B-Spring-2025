@@ -17,6 +17,9 @@ public class LinkedListDeque61BTest {
     @Test
     void iteratorTest() {
         Deque61B<Integer> lld = new LinkedListDeque61B<>();
+        for (Integer x : lld) {
+            System.out.println("Not supposed to see this line.");
+        }
         lld.addLast(1);
         lld.addLast(2);
         lld.addLast(3);

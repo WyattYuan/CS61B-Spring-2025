@@ -132,20 +132,26 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
 
     private class LinkedListDequeIterator implements Iterator<T> {
         private Node<T> wizPos;
+        private int count;
 
         public LinkedListDequeIterator() {
             this.wizPos = sentinel.next;
+            count = 0;
         }
 
         @Override
         public boolean hasNext() {
-            return this.wizPos.next != sentinel;
+            return count < size;
         }
 
         @Override
         public T next() {
+            if (!hasNext()) {
+                throw new java.util.NoSuchElementException();
+            }
             T returnItem = wizPos.item;
             wizPos = wizPos.next;
+            count++;
             return returnItem;
         }
     }
