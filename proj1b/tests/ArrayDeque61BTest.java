@@ -1,6 +1,7 @@
 import deque.ArrayDeque61B;
 
 import deque.Deque61B;
+import deque.LinkedListDeque61B;
 import jh61b.utils.Reflection;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -308,6 +309,20 @@ public class ArrayDeque61BTest {
         // Remove to trigger resize down condition
         while (!ad.isEmpty() && !ad.shouldResizeDown()) {
             ad.removeFirst();
+        }
+    }
+
+
+    @Test
+    void iteratorTest() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addLast(3);
+        int i = 1;
+        for (Integer x : ad) {
+            assertThat(x).isEqualTo(i);
+            i += 1;
         }
     }
 
