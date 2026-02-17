@@ -4,32 +4,32 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ArrayDeque61B<T> implements Deque61B<T> {
-    int length;
-    int size = 8;
+    int size;
+    int capacity = 8;
     T[] backArray;
     int nextFirst;
     int nextLast;
 
     public ArrayDeque61B() {
-        this.backArray = (T[]) new Object[size];
-        this.length = 0;
-        this.nextFirst = size - 1;
+        this.backArray = (T[]) new Object[capacity];
+        this.size = 0;
+        this.nextFirst = capacity - 1;
         this.nextLast = 0;
     }
 
     public ArrayDeque61B(T[] args) {
-        this.backArray = (T[]) new Object[size];
+        this.backArray = (T[]) new Object[capacity];
         int i = 0;
         for (T x : args) {
-            if (i == this.size) {
-                this.size *= 2;
+            if (i == this.capacity) {
+                this.capacity *= 2;
 
             }
             this.backArray[i] = x;
             i += 1;
         }
-        this.length = 0;
-        this.nextFirst = size - 1;
+        this.size = 0;
+        this.nextFirst = capacity - 1;
         this.nextLast = 0;
     }
 
@@ -39,42 +39,42 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     public void resize(int newSize) {
         T[] newArray = (T[]) new Object[newSize];
-        System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, size - nextFirst - 1);
-        System.arraycopy(this.backArray, 0, newArray, size - nextFirst - 1, nextLast);
+        System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, capacity - nextFirst - 1);
+        System.arraycopy(this.backArray, 0, newArray, capacity - nextFirst - 1, nextLast);
         this.backArray = newArray;
-        this.size = newSize;
+        this.capacity = newSize;
         this.nextFirst = newSize - 1;
-        this.nextLast = this.length;
+        this.nextLast = this.size;
     }
 
     @Override
     public void addFirst(T x) {
         if (isFull()) {
-            resize(this.size * 2);
+            resize(this.capacity * 2);
         }
         this.backArray[nextFirst] = x;
         this.nextFirst -= 1;
-        this.length += 1;
+        this.size += 1;
     }
 
     @Override
     public void addLast(T x) {
         if (isFull()) {
-            resize(this.size * 2);
+            resize(this.capacity * 2);
         }
         this.backArray[nextLast] = x;
         this.nextLast += 1;
-        this.length += 1;
+        this.size += 1;
     }
 
     @Override
     public List<T> toList() {
-        if (size == 0) {
+        if (capacity == 0) {
             return List.of();
         }
         List<T> returnList = new ArrayList<>();
-        for (int i = 0; i < length; i++) {
-            returnList.add(this.backArray[Math.floorMod(i + nextFirst + 1, this.size)]);
+        for (int i = 0; i < size; i++) {
+            returnList.add(this.backArray[Math.floorMod(i + nextFirst + 1, this.capacity)]);
         }
         return returnList;
     }
