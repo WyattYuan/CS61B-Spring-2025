@@ -171,4 +171,45 @@ public class ArrayDeque61BTest {
         assertThat(ad2.removeLast()).isEqualTo(null);
     }
 
+    @Test
+    void resizeTest2() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+
+        ad.addFirst(3);
+        ad.addFirst(2);
+        ad.addFirst(1);
+        ad.removeLast();
+
+        ad.resize(16);
+        assertThat(ad.toList()).containsExactly(1, 2).inOrder();
+    }
+
+    @Test
+    void resizeTest3() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addLast(3);
+        ad.removeFirst();
+        ad.removeFirst();
+
+        ad.resize(16);
+        assertThat(ad.toList()).containsExactly(3).inOrder();
+    }
+
+    @Test
+    void resizeTest4() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+
+        for (int i = 0; i < 10000; i++) {
+            ad.addLast(i);
+        }
+        assertThat(ad.getCapacity()).isGreaterThan(9999);
+        for (int i = 0; i < 10000; i++) {
+            ad.removeLast();
+            assertThat(ad.shouldResizeDown()).isFalse();
+        }
+    }
+
 }

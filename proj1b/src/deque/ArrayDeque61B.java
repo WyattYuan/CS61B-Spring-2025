@@ -31,6 +31,17 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         return this.nextFirst == this.nextLast;
     }
 
+    public boolean shouldResizeDown() {
+        if (this.capacity >= 16) {
+            return this.size < 0.25 * this.capacity;
+        }
+        return false;
+    }
+
+    public int getCapacity() {
+        return this.capacity;
+    }
+
     @SuppressWarnings("unchecked")
     public void resize(int newSize) {
         T[] newArray = (T[]) new Object[newSize];
@@ -92,6 +103,9 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         T returnItem = this.backArray[Math.floorMod(nextFirst + 1, capacity)];
         this.nextFirst = Math.floorMod(nextFirst + 1, capacity);
         this.size -= 1;
+        while (shouldResizeDown()) {
+            resize(this.capacity / 2);
+        }
         return returnItem;
     }
 
@@ -103,6 +117,9 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         T returnItem = this.backArray[Math.floorMod(nextLast - 1, capacity)];
         this.nextLast = Math.floorMod(nextLast - 1, capacity);
         this.size -= 1;
+        if (shouldResizeDown()) {
+            resize(this.capacity / 2);
+        }
         return returnItem;
     }
 
