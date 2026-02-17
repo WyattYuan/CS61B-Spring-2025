@@ -84,12 +84,24 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T removeFirst() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        T returnItem = this.backArray[Math.floorMod(nextFirst + 1, capacity)];
+        this.nextFirst = Math.floorMod(nextFirst + 1, capacity);
+        this.size -= 1;
+        return returnItem;
     }
 
     @Override
     public T removeLast() {
-        return null;
+        if (size == 0) {
+            return null;
+        }
+        T returnItem = this.backArray[Math.floorMod(nextLast - 1, capacity)];
+        this.nextLast = Math.floorMod(nextLast - 1, capacity);
+        this.size -= 1;
+        return returnItem;
     }
 
     @Override

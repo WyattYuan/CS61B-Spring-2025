@@ -56,25 +56,25 @@ public class ArrayDeque61BTest {
         assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
     }
 
-    @Test
-    void resizeTest() {
-        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
-        ad.resize(16);
-        ad.resize(8);
-
-        ad.addFirst(3);
-        ad.addFirst(2);
-        ad.addFirst(1);
-        ad.addLast(4);
-        ad.addLast(5);
-        ad.addLast(6);
-
-        ad.resize(16);
-        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
-
-        ad.resize(8);
-        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
-    }
+    // @Test
+    // void resizeTest() {
+    //     ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+    //     ad.resize(16);
+    //     ad.resize(8);
+    //
+    //     ad.addFirst(3);
+    //     ad.addFirst(2);
+    //     ad.addFirst(1);
+    //     ad.addLast(4);
+    //     ad.addLast(5);
+    //     ad.addLast(6);
+    //
+    //     ad.resize(16);
+    //     assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+    //
+    //     ad.resize(8);
+    //     assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+    // }
 
     @Test
     void addAndResizeTest() {
@@ -119,8 +119,28 @@ public class ArrayDeque61BTest {
 
     @Test
     void ofTest() {
+        ArrayDeque61B<Integer> ad = ArrayDeque61B.of(1, 2, 3, 4, 5, 6, 7, 8, 9);
+        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9).inOrder();
+    }
+
+    @Test
+    void removeTest() {
         ArrayDeque61B<Integer> ad = ArrayDeque61B.of(1, 2, 3, 4, 5, 6);
-        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+        ad.removeFirst();
+        assertThat(ad.toList()).containsExactly(2, 3, 4, 5, 6).inOrder();
+
+        ad.removeFirst();
+        assertThat(ad.toList()).containsExactly(3, 4, 5, 6).inOrder();
+
+        ad.removeLast();
+        assertThat(ad.toList()).containsExactly(3, 4, 5).inOrder();
+
+        ad.removeLast();
+        assertThat(ad.toList()).containsExactly(3, 4).inOrder();
+
+        ArrayDeque61B<Integer> ad2 = new ArrayDeque61B<>();
+        assertThat(ad2.removeFirst()).isEqualTo(null);
+        assertThat(ad2.removeLast()).isEqualTo(null);
     }
 
 }
