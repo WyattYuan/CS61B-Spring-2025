@@ -47,4 +47,16 @@ public class LinkedListDeque61BTest {
         lld3.addLast("end");
         assertThat(lld).isNotEqualTo(lld3);
     }
+
+    @Test
+    void toStringTest(){
+        Deque61B<String> lld1 = new LinkedListDeque61B<>();
+
+        lld1.addLast("front");
+        lld1.addLast("middle");
+        lld1.addLast("back");
+
+        System.out.println(lld1);
+
+    }
 }

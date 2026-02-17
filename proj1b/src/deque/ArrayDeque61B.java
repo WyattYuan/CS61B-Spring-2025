@@ -159,6 +159,11 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
+    public String toString() {
+        return toList().toString();
+    }
+
+    @Override
     public Iterator<T> iterator() {
         return new ArrayDequeIterator();
     }

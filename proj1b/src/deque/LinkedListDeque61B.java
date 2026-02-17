@@ -162,7 +162,7 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
     }
 
     @Override
-    public boolean equals(Object other){
+    public boolean equals(Object other) {
         if (other == this) {
             return true;
         } else if (other instanceof LinkedListDeque61B<?> otherLLD) {
@@ -179,5 +179,18 @@ public class LinkedListDeque61B<T> implements Deque61B<T> {
             return false;
         }
         return false;
+    }
+
+    @Override
+    public String toString() {
+        List<String> listOfItems = new ArrayList<>();
+        for (T x : this) {
+            listOfItems.add(x.toString());
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append('[');
+        sb.append(String.join(", ", listOfItems));
+        sb.append(']');
+        return sb.toString();
     }
 }

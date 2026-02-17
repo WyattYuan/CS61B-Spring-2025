@@ -353,4 +353,16 @@ public class ArrayDeque61BTest {
         assertThat(ad).isNotEqualTo(ad3);
     }
 
+    @Test
+    void toStringTest(){
+        Deque61B<String> ad1 = new ArrayDeque61B<>();
+
+        ad1.addLast("front");
+        ad1.addLast("middle");
+        ad1.addLast("back");
+
+        System.out.println(ad1);
+
+    }
+
 }
