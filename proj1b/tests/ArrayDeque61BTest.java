@@ -329,4 +329,28 @@ public class ArrayDeque61BTest {
         }
     }
 
+    @Test
+    void isEqualTest() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addLast(3);
+
+        Deque61B<Integer> ad2 = new ArrayDeque61B<>();
+        ad2.addLast(1);
+        ad2.addLast(2);
+        ad2.addLast(3);
+
+        assertThat(ad).isEqualTo(ad2);
+
+        ad2.addLast(4);
+        assertThat(ad).isNotEqualTo(ad2);
+
+        Deque61B<String> ad3 = new ArrayDeque61B<>()  ;
+        ad3.addLast("front");
+        ad3.addLast("mid");
+        ad3.addLast("end");
+        assertThat(ad).isNotEqualTo(ad3);
+    }
+
 }

@@ -1,13 +1,7 @@
 import deque.ArrayDeque61B;
-
 import deque.Deque61B;
 import deque.LinkedListDeque61B;
-import jh61b.utils.Reflection;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import java.lang.reflect.Field;
-import java.util.List;
 
 import static com.google.common.truth.Truth.assertThat;
 import static com.google.common.truth.Truth.assertWithMessage;
@@ -30,4 +24,27 @@ public class LinkedListDeque61BTest {
         }
     }
 
+    @Test
+    void isEqualTest() {
+        Deque61B<Integer> lld = new LinkedListDeque61B<>();
+        lld.addLast(1);
+        lld.addLast(2);
+        lld.addLast(3);
+
+        Deque61B<Integer> lld2 = new LinkedListDeque61B<>();
+        lld2.addLast(1);
+        lld2.addLast(2);
+        lld2.addLast(3);
+
+        assertThat(lld).isEqualTo(lld2);
+
+        lld2.addLast(4);
+        assertThat(lld).isNotEqualTo(lld2);
+
+        Deque61B<String> lld3 = new LinkedListDeque61B<>()  ;
+        lld3.addLast("front");
+        lld3.addLast("mid");
+        lld3.addLast("end");
+        assertThat(lld).isNotEqualTo(lld3);
+    }
 }
