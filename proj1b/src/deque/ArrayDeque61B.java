@@ -39,14 +39,8 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     public void resize(int newSize) {
         T[] newArray = (T[]) new Object[newSize];
-        // System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, size - nextFirst - 1);
-        // System.arraycopy(this.backArray, 0, newArray, size - nextFirst, nextLast);
-        List<T> oldList = toList();
-        int i = 0;
-        for (T x : oldList) {
-            newArray[i] = x;
-            i++;
-        }
+        System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, size - nextFirst - 1);
+        System.arraycopy(this.backArray, 0, newArray, size - nextFirst - 1, nextLast);
         this.backArray = newArray;
         this.size = newSize;
         this.nextFirst = newSize - 1;
