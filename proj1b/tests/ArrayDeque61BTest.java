@@ -36,11 +36,11 @@ public class ArrayDeque61BTest {
     @Test
     void addLastTest() {
         Deque61B<Integer> ad = new ArrayDeque61B<>();
-        ad.addLast(1);
-        ad.addLast(2);
-        ad.addLast(3);
+        for (int i = 0; i < 20; i++) {
+            ad.addLast(i);
+        }
 
-        assertThat(ad.toList()).containsExactly(1, 2, 3).inOrder();
+        assertThat(ad.toList()).containsExactly(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19).inOrder();
     }
 
     @Test
@@ -209,6 +209,105 @@ public class ArrayDeque61BTest {
         for (int i = 0; i < 10000; i++) {
             ad.removeLast();
             assertThat(ad.shouldResizeDown()).isFalse();
+        }
+    }
+
+    @Test
+    void complexWrappingTest() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+
+        // Add first to the front side
+        ad.addFirst(3);
+        ad.addFirst(2);
+        ad.addFirst(1);
+
+        // Remove one from front
+        ad.removeFirst();
+
+        // Add to back
+        ad.addLast(4);
+        ad.addLast(5);
+
+        // Remove from back
+        ad.removeLast();
+
+        // Verify state
+        assertThat(ad.toList()).containsExactly(2, 3, 4).inOrder();
+        assertThat(ad.size()).isEqualTo(3);
+    }
+
+    @Test
+    void mixedTypeTest() {
+        ArrayDeque61B<Object> ad = new ArrayDeque61B<>();
+        ad.addLast("string");
+        ad.addLast(42);
+        ad.addLast(3.14);
+        ad.addLast(true);
+
+        assertThat(ad.size()).isEqualTo(4);
+        assertThat(ad.get(0)).isEqualTo("string");
+        assertThat(ad.get(1)).isEqualTo(42);
+        assertThat(ad.get(2)).isEqualTo(3.14);
+        assertThat(ad.get(3)).isEqualTo(true);
+    }
+
+    @Test
+    void largeOperationsTest() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+        int n = 1000;
+
+        // Add many elements
+        for (int i = 0; i < n; i++) {
+            if (i % 2 == 0) {
+                ad.addLast(i);
+            } else {
+                ad.addFirst(-i);
+            }
+        }
+
+        assertThat(ad.size()).isEqualTo(n);
+
+        // Verify we can get elements
+        assertThat(ad.get(0)).isNotNull();
+        assertThat(ad.get(n / 2)).isNotNull();
+        assertThat(ad.get(n - 1)).isNotNull();
+    }
+
+    @Test
+    void toListConsistency() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addFirst(0);
+        ad.addLast(3);
+
+        List<Integer> list1 = ad.toList();
+        List<Integer> list2 = ad.toList();
+
+        assertThat(list1).isEqualTo(list2);
+        assertThat(ad.toList()).containsExactly(0, 1, 2, 3).inOrder();
+    }
+
+    @Test
+    void shouldResizeDownConditions() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+
+        // Initially capacity is too small to resize down
+        ad.addLast(1);
+        ad.removeFirst();
+        assertThat(ad.shouldResizeDown()).isFalse();
+
+        // Add many elements to trigger resize up
+        for (int i = 0; i < 20; i++) {
+            ad.addLast(i);
+        }
+
+        // Now capacity should be >= 16
+        assertThat(ad.getCapacity()).isGreaterThan(15);
+
+        // Remove to trigger resize down condition
+        while (!ad.isEmpty() && !ad.shouldResizeDown()) {
+            ad.removeFirst();
         }
     }
 

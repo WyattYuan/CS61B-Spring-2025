@@ -45,8 +45,9 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     @SuppressWarnings("unchecked")
     public void resize(int newSize) {
         T[] newArray = (T[]) new Object[newSize];
-        System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, capacity - nextFirst - 1);
-        System.arraycopy(this.backArray, 0, newArray, capacity - nextFirst - 1, nextLast);
+        for (int i = 0; i < this.size; i++) {
+            newArray[i] = this.get(i);
+        }
         this.backArray = newArray;
         this.capacity = newSize;
         this.nextFirst = newSize - 1;
@@ -59,7 +60,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             resize(this.capacity * 2);
         }
         this.backArray[nextFirst] = x;
-        this.nextFirst -= 1;
+        this.nextFirst = Math.floorMod(this.nextFirst - 1, this.capacity);
         this.size += 1;
     }
 
@@ -69,7 +70,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
             resize(this.capacity * 2);
         }
         this.backArray[nextLast] = x;
-        this.nextLast += 1;
+        this.nextLast = Math.floorMod(this.nextLast + 1, this.capacity);
         this.size += 1;
     }
 
