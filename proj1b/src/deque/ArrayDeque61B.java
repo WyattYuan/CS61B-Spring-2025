@@ -10,6 +10,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
     int nextFirst;
     int nextLast;
 
+    @SuppressWarnings("unchecked")
     public ArrayDeque61B() {
         this.backArray = (T[]) new Object[capacity];
         this.size = 0;
@@ -30,6 +31,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         return this.nextFirst == this.nextLast;
     }
 
+    @SuppressWarnings("unchecked")
     public void resize(int newSize) {
         T[] newArray = (T[]) new Object[newSize];
         System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, capacity - nextFirst - 1);
