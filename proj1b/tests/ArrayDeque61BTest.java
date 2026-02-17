@@ -90,4 +90,31 @@ public class ArrayDeque61BTest {
         assertThat(ad.toList()).containsExactly(10, 11, 12, 13, 14, 15, 16, 17, 1, 2, 3, 4, 5, 6, 7, 8, 9).inOrder();
     }
 
+    @Test
+    void getTest() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+        assertThat(ad.isEmpty()).isTrue();
+        assertThat(ad.get(1)).isEqualTo(null);
+
+        ad.addFirst(3);
+        ad.addFirst(2);
+        ad.addFirst(1);
+        ad.addLast(4);
+        ad.addLast(5);
+        ad.addLast(6);
+        ad.addLast(7);
+        ad.addLast(8);
+
+        assertThat(ad.isEmpty()).isFalse();
+
+        for (int i = 0; i < ad.size(); i++) {
+            assertThat(ad.get(i)).isEqualTo(i + 1);
+        }
+        assertThat(ad.get(ad.size())).isEqualTo(null);
+        assertThat(ad.get(ad.size() + 1)).isEqualTo(null);
+        assertThat(ad.get(100)).isEqualTo(null);
+        assertThat(ad.get(-1)).isEqualTo(null);
+
+    }
+
 }

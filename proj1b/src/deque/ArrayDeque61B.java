@@ -81,12 +81,12 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public boolean isEmpty() {
-        return false;
+        return this.size == 0;
     }
 
     @Override
     public int size() {
-        return 0;
+        return this.size;
     }
 
     @Override
@@ -101,7 +101,10 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        return null;
+        if (this.size == 0 || index < 0 || index >= this.size){
+            return null;
+        }
+        return this.backArray[Math.floorMod(this.nextFirst + index + 1, this.capacity)];
     }
 
     @Override
