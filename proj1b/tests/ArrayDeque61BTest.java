@@ -117,4 +117,10 @@ public class ArrayDeque61BTest {
 
     }
 
+    @Test
+    void ofTest() {
+        ArrayDeque61B<Integer> ad = ArrayDeque61B.of(1, 2, 3, 4, 5, 6);
+        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+    }
+
 }

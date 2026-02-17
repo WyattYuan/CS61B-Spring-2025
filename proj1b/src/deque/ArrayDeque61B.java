@@ -17,20 +17,13 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         this.nextLast = 0;
     }
 
-    public ArrayDeque61B(T[] args) {
-        this.backArray = (T[]) new Object[capacity];
-        int i = 0;
-        for (T x : args) {
-            if (i == this.capacity) {
-                this.capacity *= 2;
-
-            }
-            this.backArray[i] = x;
-            i += 1;
+    @SafeVarargs
+    public static <Q> ArrayDeque61B<Q> of(Q... stuff) {
+        ArrayDeque61B<Q> returnAD = new ArrayDeque61B<>();
+        for (Q x : stuff) {
+            returnAD.addLast(x);
         }
-        this.size = 0;
-        this.nextFirst = capacity - 1;
-        this.nextLast = 0;
+        return returnAD;
     }
 
     private boolean isFull() {
@@ -101,7 +94,7 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public T get(int index) {
-        if (this.size == 0 || index < 0 || index >= this.size){
+        if (this.size == 0 || index < 0 || index >= this.size) {
             return null;
         }
         return this.backArray[Math.floorMod(this.nextFirst + index + 1, this.capacity)];
