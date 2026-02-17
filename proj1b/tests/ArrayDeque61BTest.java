@@ -33,4 +33,61 @@ public class ArrayDeque61BTest {
         assertThat(ad.toList()).containsExactly(3, 2, 1).inOrder();
     }
 
+    @Test
+    void addLastTest() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addLast(1);
+        ad.addLast(2);
+        ad.addLast(3);
+
+        assertThat(ad.toList()).containsExactly(1, 2, 3).inOrder();
+    }
+
+    @Test
+    void addTest() {
+        Deque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.addFirst(3);
+        ad.addFirst(2);
+        ad.addFirst(1);
+        ad.addLast(4);
+        ad.addLast(5);
+        ad.addLast(6);
+
+        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+    }
+
+    @Test
+    void resizeTest() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+        ad.resize(16);
+        ad.resize(8);
+
+        ad.addFirst(3);
+        ad.addFirst(2);
+        ad.addFirst(1);
+        ad.addLast(4);
+        ad.addLast(5);
+        ad.addLast(6);
+
+        ad.resize(16);
+        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+
+        ad.resize(8);
+        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6).inOrder();
+    }
+
+    @Test
+    void addAndResizeTest() {
+        ArrayDeque61B<Integer> ad = new ArrayDeque61B<>();
+        for (int i = 0; i < 9; i++) {
+            ad.addLast(i + 1);
+        }
+        assertThat(ad.toList()).containsExactly(1, 2, 3, 4, 5, 6, 7, 8, 9).inOrder();
+
+        for (int i = 0; i < 8; i++) {
+            ad.addFirst(17 - i);
+        }
+        assertThat(ad.toList()).containsExactly(10, 11, 12, 13, 14, 15, 16, 17, 1, 2, 3, 4, 5, 6, 7, 8, 9).inOrder();
+    }
+
 }

@@ -37,12 +37,27 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
         return this.nextFirst == this.nextLast;
     }
 
-    private void resize(int newSize) {
-
+    public void resize(int newSize) {
+        T[] newArray = (T[]) new Object[newSize];
+        // System.arraycopy(this.backArray, nextFirst + 1, newArray, 0, size - nextFirst - 1);
+        // System.arraycopy(this.backArray, 0, newArray, size - nextFirst, nextLast);
+        List<T> oldList = toList();
+        int i = 0;
+        for (T x : oldList) {
+            newArray[i] = x;
+            i++;
+        }
+        this.backArray = newArray;
+        this.size = newSize;
+        this.nextFirst = newSize - 1;
+        this.nextLast = this.length;
     }
 
     @Override
     public void addFirst(T x) {
+        if (isFull()) {
+            resize(this.size * 2);
+        }
         this.backArray[nextFirst] = x;
         this.nextFirst -= 1;
         this.length += 1;
@@ -50,7 +65,12 @@ public class ArrayDeque61B<T> implements Deque61B<T> {
 
     @Override
     public void addLast(T x) {
-
+        if (isFull()) {
+            resize(this.size * 2);
+        }
+        this.backArray[nextLast] = x;
+        this.nextLast += 1;
+        this.length += 1;
     }
 
     @Override
