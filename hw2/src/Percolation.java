@@ -3,6 +3,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private final WeightedQuickUnionUF uf;
+    private final WeightedQuickUnionUF ufForIsFull;
     boolean[][] openMatrix;  // track every site's open state
     private final int N;
     private int numberOfOpenSites;
@@ -19,6 +20,7 @@ public class Percolation {
             throw new java.lang.IllegalArgumentException();
         }
         uf = new WeightedQuickUnionUF(N * N + 2);
+        ufForIsFull = new WeightedQuickUnionUF(N * N + 1);
 
         openMatrix = new boolean[N][N];
         this.N = N;
@@ -42,6 +44,7 @@ public class Percolation {
         int currentID = getID(row, col);
         if (row == 0) {
             uf.union(currentID, source);
+            ufForIsFull.union(currentID, source);
         }
         if (row == N - 1) {
             uf.union(currentID, target);
@@ -52,6 +55,7 @@ public class Percolation {
         for (Direction dir : directions) {
             if (isOpen(row, col, dir)) {
                 uf.union(currentID, getID(row, col, dir));
+                ufForIsFull.union(currentID, getID(row, col, dir));
             }
         }
     }
@@ -61,7 +65,7 @@ public class Percolation {
     }
 
     public boolean isFull(int row, int col) {
-        return isOpen(row, col) && uf.connected(source, getID(row, col));
+        return isOpen(row, col) && ufForIsFull.connected(source, getID(row, col));
     }
 
     public int numberOfOpenSites() {
