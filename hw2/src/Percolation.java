@@ -32,6 +32,9 @@ public class Percolation {
         if (row < 0 || row > N - 1 || col < 0 || col > N - 1) {
             throw new java.lang.IndexOutOfBoundsException();
         }
+        if (isOpen(row, col)) {
+            return;
+        }
         // data track
         openMatrix[row][col] = true;
         numberOfOpenSites += 1;
@@ -69,8 +72,6 @@ public class Percolation {
         return uf.connected(source, target);
     }
 
-    // TODO: Add any useful helper methods (we highly recommend this!).
-    // TODO: Remove all TODO comments before submitting.
     private boolean isOpen(int row, int col, Direction n) {
         switch (n) {
             case LEFT -> {
