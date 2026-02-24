@@ -39,7 +39,8 @@ public class Percolation {
         int currentID = getID(row, col);
         if (row == 0) {
             uf.union(currentID, source);
-        } else if (row == N - 1) {
+        }
+        if (row == N - 1) {
             uf.union(currentID, target);
         }
 

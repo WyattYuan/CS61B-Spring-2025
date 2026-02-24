@@ -81,6 +81,32 @@ public class PercolationTest {
     }
 
     @Test
+    public void colTest() {
+        int N = 4;
+        Percolation p = new Percolation(N);
+        p.open(0, 0);
+        int[][] openSites = {
+                {0, 0},
+                {1, 0},
+                {2, 0},
+                {3, 0},
+                {0, 2},
+                {1, 3}
+        };
+        Cell[][] expectedState = {
+                {Cell.FULL, Cell.CLOSED, Cell.FULL, Cell.CLOSED},
+                {Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.OPEN},
+                {Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+                {Cell.FULL, Cell.CLOSED, Cell.CLOSED, Cell.CLOSED},
+        };
+        for (int[] site : openSites) {
+            p.open(site[0], site[1]);
+        }
+        assertThat(getState(N, p)).isEqualTo(expectedState);
+        assertThat(p.percolates()).isTrue();
+    }
+
+    @Test
     public void illegalArgumentTest() {
         IllegalArgumentException e = assertThrows(
                 IllegalArgumentException.class,
