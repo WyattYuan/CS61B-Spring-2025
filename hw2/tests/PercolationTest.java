@@ -1,6 +1,8 @@
 import org.junit.jupiter.api.Test;
+import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.fail;
 
 public class PercolationTest {
@@ -13,7 +15,7 @@ public class PercolationTest {
      * (1) OPEN: isOpen() returns true, isFull() returns false
      * <p>
      * (2) INVALID: isOpen() returns false, isFull() returns true
-     *              (This should not happen! Only open cells should be full.)
+     * (This should not happen! Only open cells should be full.)
      * <p>
      * (3) FULL: isOpen() returns true, isFull() returns true
      * <p>
@@ -78,11 +80,16 @@ public class PercolationTest {
         assertThat(p.percolates()).isTrue();
     }
 
-    // TODO: Using the given tests above as a template,
-    //       write some more tests and delete the fail() line
     @Test
-    public void yourFirstTestHere() {
-        fail("Did you write your own tests?");
-    }
+    public void illegalArgumentTest() {
+        IllegalArgumentException e = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Percolation(-1)
+        );
 
+        IllegalArgumentException e2 = assertThrows(
+                IllegalArgumentException.class,
+                () -> new Percolation(0)
+        );
+    }
 }
