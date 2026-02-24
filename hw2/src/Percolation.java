@@ -54,8 +54,9 @@ public class Percolation {
         Direction[] directions = {Direction.LEFT, Direction.RIGHT, Direction.UP, Direction.DOWN};
         for (Direction dir : directions) {
             if (isOpen(row, col, dir)) {
-                uf.union(currentID, getID(row, col, dir));
-                ufForIsFull.union(currentID, getID(row, col, dir));
+                int id = getID(row, col, dir);
+                uf.union(currentID, id);
+                ufForIsFull.union(currentID, id);
             }
         }
     }
