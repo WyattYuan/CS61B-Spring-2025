@@ -18,6 +18,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     public BSTNode root;
+    private int size;
 
     private int compareRoots(BSTNode node) {
         return 0;
@@ -32,6 +33,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     public void put(K key, V value) {
         if (this.root == null) {
             this.root = new BSTNode(key, value, null, null);
+            size += 1;
             return;
         }
         put(key, value, root);
@@ -41,12 +43,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         if (key.compareTo(root.key) > 0) {
             if (root.right == null) {
                 root.right = new BSTNode(key, value, null, null);
+                size += 1;
             } else {
                 put(key, value, root.right);
             }
         } else if (key.compareTo(root.key) < 0) {
             if (root.left == null) {
                 root.left = new BSTNode(key, value, null, null);
+                size += 1;
             } else {
                 put(key, value, root.left);
             }
@@ -63,6 +67,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private V get(K key, BSTNode root) {
         if (root == null) {
+            return null;
+        } else if (root.key == null) {
             return null;
         }
         if (key.equals(root.key)) {
@@ -83,6 +89,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private boolean containsKey(K key, BSTNode root) {
         if (root == null) {
             return false;
+        } else if (root.key == null) {
+            return false;
         }
         if (key.equals(root.key)) {
             return true;
@@ -96,12 +104,13 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     @Override
     public void clear() {
-
+        root = new BSTNode(null,null,null,null);
+        size = 0;
     }
 
     @Override
