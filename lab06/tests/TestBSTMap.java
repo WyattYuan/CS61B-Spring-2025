@@ -72,6 +72,7 @@ public class TestBSTMap {
             b.put("hi" + i, 1);
         }
         assertThat(b.size()).isEqualTo(456);
+        b.printInOrder();
     }
 
     // Assumes `get` and `containsKey` are implemented properly.
@@ -112,17 +113,7 @@ public class TestBSTMap {
         b.put("b", "provolone");
         // assertThat(b.size()).isEqualTo(5);
         assertThat(b.get("b")).isEqualTo("provolone");
-    }
-
-    @Test
-    public void putTest(){
-        BSTMap<String, String> b = new BSTMap<>();
-        assertThat(b.root).isNull();
-        b.put("d", "parmesan");
-        b.put("a", "mozzarella");
-        b.put("c", "swiss");
-        b.put("b", "pepper jack");
-        b.put("e", "gouda");
+        b.printInOrder();
     }
 
 }

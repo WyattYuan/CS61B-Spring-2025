@@ -3,7 +3,7 @@ import java.util.Set;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
-    public class BSTNode {
+    private class BSTNode {
         K key;
         V value;
         BSTNode left;
@@ -15,9 +15,23 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             this.left = left;
             this.right = right;
         }
+
+        private BSTNode() {
+            this.key = null;
+            this.value = null;
+            this.left = null;
+            this.right = null;
+        }
+
+        private BSTNode(K key, V value) {
+            this.key = key;
+            this.value = value;
+            this.left = null;
+            this.right = null;
+        }
     }
 
-    public BSTNode root;
+    private BSTNode root;
     private int size;
 
     private int compareRoots(BSTNode node) {
@@ -25,14 +39,15 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     public void printInOrder() {
-        return;
+        for (K key : this){
+            System.out.println(key);
+        }
     }
-
 
     @Override
     public void put(K key, V value) {
         if (this.root == null) {
-            this.root = new BSTNode(key, value, null, null);
+            this.root = new BSTNode(key, value);
             size += 1;
             return;
         }
@@ -42,14 +57,14 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     private void put(K key, V value, BSTNode root) {
         if (key.compareTo(root.key) > 0) {
             if (root.right == null) {
-                root.right = new BSTNode(key, value, null, null);
+                root.right = new BSTNode(key, value);
                 size += 1;
             } else {
                 put(key, value, root.right);
             }
         } else if (key.compareTo(root.key) < 0) {
             if (root.left == null) {
-                root.left = new BSTNode(key, value, null, null);
+                root.left = new BSTNode(key, value);
                 size += 1;
             } else {
                 put(key, value, root.left);
@@ -109,13 +124,17 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void clear() {
-        root = new BSTNode(null,null,null,null);
+        root = new BSTNode();
         size = 0;
     }
 
     @Override
     public Set<K> keySet() {
-        return Set.of();
+        Set<K> returnSet = new LinkedHashSet<>();
+        for(K key : this){
+            returnSet.add(key);
+        }
+        return returnSet;
     }
 
     @Override
@@ -125,6 +144,45 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public Iterator<K> iterator() {
-        return null;
+        return new BSTIterator(root);
+    }
+
+
+    /**
+     * An iterator for traversing the keys of a Binary Search Tree (BST) in ascending order.
+     * <p>
+     * The iterator uses an explicit stack to simulate the in-order traversal of the BST.
+     * Keys are returned in the order they would appear in an in-order traversal of the tree.
+     * </p>
+     *
+     * @param <K> the type of keys stored in the BST.
+     */
+    private class BSTIterator implements Iterator<K> {
+        Stack<BSTNode> stack = new Stack<>();
+
+        public BSTIterator(BSTNode root) {
+            pushLeft(root);
+        }
+
+        private void pushLeft(BSTNode node) {
+            while (node != null) {
+                stack.push(node);
+                node = node.left;
+            }
+        }
+
+        @Override
+        public boolean hasNext() {
+            return !stack.isEmpty();
+        }
+
+        @Override
+        public K next() {
+            BSTNode node = stack.pop();
+            if (node.right != null) {
+                pushLeft(node.right);
+            }
+            return node.key;
+        }
     }
 }
