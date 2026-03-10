@@ -58,6 +58,20 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V get(K key) {
+        return get(key, this.root);
+    }
+
+    private V get(K key, BSTNode root) {
+        if (root == null) {
+            return null;
+        }
+        if (key.equals(root.key)) {
+            return root.value;
+        } else if (key.compareTo(root.key) > 0) {
+            return get(key, root.right);
+        } else if (key.compareTo(root.key) < 0) {
+            return get(key, root.left);
+        }
         return null;
     }
 
