@@ -3,7 +3,7 @@ import java.util.Set;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
-    private class BSTNode {
+    public class BSTNode {
         K key;
         V value;
         BSTNode left;
@@ -17,8 +17,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         }
     }
 
-
-    private BSTNode root;
+    public BSTNode root;
 
     private int compareRoots(BSTNode node) {
         return 0;
@@ -31,16 +30,30 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void put(K key, V value) {
-        if (compareRoots(root) > 0) {
-            // root.right = put();
+        if (this.root == null) {
+            this.root = new BSTNode(key, value, null, null);
+            return;
         }
+        put(key, value, root);
     }
 
-    private BSTNode put(K key, V value, BSTNode root) {
-        if (root == null) {
-            return new BSTNode(key, value, null, null);
+    private void put(K key, V value, BSTNode root) {
+        if (key.compareTo(root.key) > 0) {
+            if (root.right == null) {
+                root.right = new BSTNode(key, value, null, null);
+            } else {
+                put(key, value, root.right);
+            }
+        } else if (key.compareTo(root.key) < 0) {
+            if (root.left == null) {
+                root.left = new BSTNode(key, value, null, null);
+            } else {
+                put(key, value, root.left);
+            }
+        } else {
+            // key相同时应该更新value
+            root.value = value;
         }
-        return root;
     }
 
     @Override
