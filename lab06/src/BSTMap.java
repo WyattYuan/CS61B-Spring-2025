@@ -35,6 +35,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     private BSTNode root;
     private int size;
+    private V removedValue;
 
     private int compareRoots(BSTNode node) {
         return 0;
@@ -125,12 +126,13 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
-        V r = get(key);
-        if (r != null) { // 只有在获取的值不为 null 时，才会执行大括号内的逻辑
-            root = remove(root, key); // 必须接收返回值以更新树的物理入口
-            size -= 1; // 仅在确认找到并删除后，全局减少 1 次
+        removedValue = null;
+        root = remove(root, key); // 必须接收返回值以更新树的物理入口
+        // 如果 removedValue 不再是 null，说明真正执行了删除动作
+        if (removedValue != null) {
+            size -= 1;
         }
-        return r;
+        return removedValue;
     }
 
     /**
@@ -149,6 +151,8 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
         } else if (cmp > 0) {
             x.right = remove(x.right, key);
         } else {
+            removedValue = x.value;
+
             // 场景一 & 二：只有一个孩子或没有孩子
             if (x.right == null) return x.left;
             if (x.left == null) return x.right;
