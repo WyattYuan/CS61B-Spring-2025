@@ -1,5 +1,7 @@
-import java.util.Iterator;
-import java.util.Set;
+import com.github.javaparser.quality.NotNull;
+import edu.umd.cs.findbugs.annotations.NonNull;
+
+import java.util.*;
 
 public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
@@ -39,7 +41,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     }
 
     public void printInOrder() {
-        for (K key : this){
+        for (K key : this) {
             System.out.println(key);
         }
     }
@@ -131,7 +133,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public Set<K> keySet() {
         Set<K> returnSet = new LinkedHashSet<>();
-        for(K key : this){
+        for (K key : this) {
             returnSet.add(key);
         }
         return returnSet;
@@ -139,7 +141,66 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public V remove(K key) {
-        return null;
+        V r = get(key);
+        remove(root,key);
+        return r;
+    }
+
+    /**
+     * 从以 x 为根的子树中递归删除指定的 key。
+     *
+     * @param x   当前子树的根节点
+     * @param key 要删除的键
+     * @return 删除操作完成后，该子树的新根节点引用
+     */
+    private BSTNode remove(BSTNode x, K key) {
+        if (x == null) return null;
+
+        int cmp = key.compareTo(x.key);
+        if (cmp < 0) {
+            x.left = remove(x.left, key);
+        } else if (cmp > 0) {
+            x.right = remove(x.right, key);
+        } else {
+            // 场景一 & 二：只有一个孩子或没有孩子
+            if (x.right == null) return x.left;
+            if (x.left == null) return x.right;
+
+            // 场景三：有两个孩子
+            BSTNode t = x;
+            // x 的替代是右子树的最小孩子，因为最后一步要return x，所以x应该更新为右子树的最小孩子
+            x = getMinNode(t.right);
+            // x 的右孩子删除了最小节点的原右子树
+            x.right = deleteMin(t.right);
+            // x 的左孩子不变
+            x.left = t.left;
+        }
+        size -= 1;
+        return x;
+    }
+
+    @NonNull
+    private BSTNode getMinNode(BSTNode root) {
+        if (root.left == null) return root;
+        return getMinNode(root.left);
+    }
+
+    /**
+     * 删除以 x 为根的子树中的最小节点
+     *
+     * @param x 当前子树根节点
+     * @return 删除后的新子树根节点
+     */
+    private BSTNode deleteMin(BSTNode x) {
+        // 如果左边没了，说明我就是最小的
+        if (x.left == null) {
+            return x.right; // 返回我的右孩子，让我的父亲指向它，我就被“跳过”了
+        }
+
+        // 递归向左找，并将返回的新子树重新连接到左边
+        x.left = deleteMin(x.left);
+
+        return x;
     }
 
     @Override
@@ -155,7 +216,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
      * Keys are returned in the order they would appear in an in-order traversal of the tree.
      * </p>
      *
-     * @param <K> the type of keys stored in the BST.
      */
     private class BSTIterator implements Iterator<K> {
         Stack<BSTNode> stack = new Stack<>();
