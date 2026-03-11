@@ -100,23 +100,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public boolean containsKey(K key) {
-        return containsKey(key, root);
-    }
-
-    private boolean containsKey(K key, BSTNode root) {
-        if (root == null) {
-            return false;
-        } else if (root.key == null) {
-            return false;
-        }
-        if (key.equals(root.key)) {
-            return true;
-        } else if (key.compareTo(root.key) > 0) {
-            return containsKey(key, root.right);
-        } else if (key.compareTo(root.key) < 0) {
-            return containsKey(key, root.left);
-        }
-        return false;
+        return get(key) != null;
     }
 
     @Override
@@ -126,7 +110,7 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
 
     @Override
     public void clear() {
-        root = new BSTNode();
+        root = null;
         size = 0;
     }
 
@@ -142,7 +126,10 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
     @Override
     public V remove(K key) {
         V r = get(key);
-        remove(root,key);
+        if (r != null) { // 只有在获取的值不为 null 时，才会执行大括号内的逻辑
+            root = remove(root, key); // 必须接收返回值以更新树的物理入口
+            size -= 1; // 仅在确认找到并删除后，全局减少 1 次
+        }
         return r;
     }
 
@@ -175,7 +162,6 @@ public class BSTMap<K extends Comparable<K>, V> implements Map61B<K, V> {
             // x 的左孩子不变
             x.left = t.left;
         }
-        size -= 1;
         return x;
     }
 
