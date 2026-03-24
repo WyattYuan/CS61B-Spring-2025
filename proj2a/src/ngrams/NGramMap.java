@@ -88,8 +88,7 @@ public class NGramMap {
      * returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(wordTimeSeries.get(word), startYear, endYear);
     }
 
     /**
@@ -99,26 +98,30 @@ public class NGramMap {
      * is not in the data files, returns an empty TimeSeries.
      */
     public TimeSeries countHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(wordTimeSeries.get(word));
     }
 
     /**
      * Returns a defensive copy of the total number of words recorded per year in all volumes.
+     * 每年所有单词加起来
      */
     public TimeSeries totalCountHistory() {
-        // TODO: Fill in this method.
-        return null;
+        return new TimeSeries(totalCounts);
     }
 
     /**
      * Provides a TimeSeries containing the relative frequency per year of WORD between STARTYEAR
      * and ENDYEAR, inclusive of both ends. If the word is not in the data files, returns an empty
      * TimeSeries.
+     * 单词TS / 总TS
      */
     public TimeSeries weightHistory(String word, int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wordTS = countHistory(word, startYear, endYear);
+        if (wordTS == null) {
+            return new TimeSeries();
+        }
+        TimeSeries totalTS = new TimeSeries(totalCountHistory(), startYear, endYear);
+        return wordTS.dividedBy(totalTS);
     }
 
     /**
@@ -127,19 +130,28 @@ public class NGramMap {
      * TimeSeries.
      */
     public TimeSeries weightHistory(String word) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries wordTS = countHistory(word);
+        if (wordTS == null) {
+            return new TimeSeries();
+        }
+        TimeSeries totalTS = totalCountHistory();
+        return wordTS.dividedBy(totalTS);
     }
 
     /**
      * Provides the summed relative frequency per year of all words in WORDS between STARTYEAR and
      * ENDYEAR, inclusive of both ends. If a word does not exist in this time frame, ignore it
      * rather than throwing an exception.
+     * 返回一组词的占比加和
      */
     public TimeSeries summedWeightHistory(Collection<String> words,
                                           int startYear, int endYear) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries returnSummedTS = new TimeSeries();
+        for (String w : words) {
+            // 踩坑：记得更新returnSummedTS的值
+            returnSummedTS = returnSummedTS.plus(weightHistory(w, startYear, endYear));
+        }
+        return returnSummedTS;
     }
 
     /**
@@ -147,8 +159,12 @@ public class NGramMap {
      * exist in this time frame, ignore it rather than throwing an exception.
      */
     public TimeSeries summedWeightHistory(Collection<String> words) {
-        // TODO: Fill in this method.
-        return null;
+        TimeSeries returnSummedTS = new TimeSeries();
+        for (String w : words) {
+            // 踩坑：记得更新returnSummedTS的值
+            returnSummedTS = returnSummedTS.plus(weightHistory(w));
+        }
+        return returnSummedTS;
     }
 
     // TODO: Add any private helper methods.
