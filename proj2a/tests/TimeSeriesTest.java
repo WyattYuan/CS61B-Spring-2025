@@ -72,6 +72,9 @@ public class TimeSeriesTest {
 
         TimeSeries x = new TimeSeries(catPopulation,1991,1992);
         assertThat(x.years()).isEqualTo(Arrays.asList(1991,1992));
+
+        TimeSeries y = new TimeSeries(catPopulation);
+        assertThat(y != catPopulation).isTrue();
     }
 
     @Test
@@ -133,6 +136,42 @@ public class TimeSeriesTest {
         } catch(Exception e) {
             // 测试是否抛出错误的类型
             assertThat(e).isInstanceOf(IllegalArgumentException.class);
+        }
+    }
+
+    @Test
+    public void testPlus(){
+        TimeSeries catPopulation = new TimeSeries();
+        catPopulation.put(1991, 0.0);
+        catPopulation.put(1992, 100.0);
+        catPopulation.put(1994, 300.0);
+
+        TimeSeries dogPopulation = new TimeSeries();
+        dogPopulation.put(1992, 200.0);
+        dogPopulation.put(1994, 400.0);
+        dogPopulation.put(1995, 500.0);
+
+        TimeSeries totalPopulation = catPopulation.plus(dogPopulation);
+        // expected: 1991: 0.0,
+        //           1992: 300
+        //           1994: 700
+        //           1995: 500
+
+
+        List<Double> expectedTotal = new ArrayList<>();
+        expectedTotal.add(0.0);
+        expectedTotal.add(300.0);
+        expectedTotal.add(700.0);
+        expectedTotal.add(500.0);
+
+        for (int i = 0; i < expectedTotal.size(); i += 1) {
+            assertThat(totalPopulation.data().get(i)).isWithin(1E-10).of(expectedTotal.get(i));
+        }
+
+        TimeSeries empty = new TimeSeries();
+        TimeSeries totalPopulation2 = empty.plus(totalPopulation);
+        for (int i = 0; i < expectedTotal.size(); i += 1) {
+            assertThat(totalPopulation2.data().get(i)).isWithin(1E-10).of(expectedTotal.get(i));
         }
     }
 } 
