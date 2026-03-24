@@ -3,9 +3,13 @@ import ngrams.TimeSeries;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.StringTokenizer;
 
 import static utils.Utils.*;
 import static com.google.common.truth.Truth.assertThat;
@@ -15,6 +19,7 @@ import static com.google.common.truth.Truth.assertThat;
  */
 public class NGramMapTest {
     @Test
+    // 测试对单个单词的countHistory功能
     public void testCountHistory() {
         NGramMap ngm = new NGramMap(SHORT_WORDS_FILE, TOTAL_COUNTS_FILE);
         List<Integer> expectedYears = new ArrayList<>();
@@ -53,9 +58,10 @@ public class NGramMapTest {
     }
 
     @Test
+    // 测试大文件下的countHistory，totalCountHistory, weightHistory, 测试方式是抽样
     public void testOnShortFile() {
         // creates an NGramMap from a large dataset
-        NGramMap ngm = new NGramMap(SHORTER_WORDS_FILE,
+        NGramMap ngm = new NGramMap(TOP_14337_WORDS_FILE,
                 TOTAL_COUNTS_FILE);
 
         // returns the count of the number of occurrences of economically per year between 2000 and 2010.
@@ -98,6 +104,29 @@ public class NGramMapTest {
 
         double expectedFishPlusDogWeight1865 = (136497.0 + 75819.0) / 2563919231.0;
         assertThat(fishPlusDogWeight.get(1865)).isWithin(1E-10).of(expectedFishPlusDogWeight1865);
+    }
+
+    @Test
+    public void testFileRead() {
+        try (BufferedReader br = new BufferedReader(new FileReader(SHORT_WORDS_FILE))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                // 指定分隔符为逗号
+                StringTokenizer st = new StringTokenizer(line, "\t");
+
+                while (st.hasMoreTokens()) {
+                    String field = st.nextToken();
+                    System.out.println(field);
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void testConstructor(){
+        NGramMap ngm = new NGramMap(SHORT_WORDS_FILE, TOTAL_COUNTS_FILE);
     }
 
 }  
