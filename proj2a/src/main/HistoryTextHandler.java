@@ -10,6 +10,7 @@ public class HistoryTextHandler extends NgordnetQueryHandler {
     private final NGramMap ngm;
 
     public HistoryTextHandler(NGramMap ngm) {
+        super();
         this.ngm = ngm;
     }
 
